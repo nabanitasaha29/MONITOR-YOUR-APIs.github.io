@@ -1,0 +1,420 @@
+{
+  "GenAI NMS API": [
+    {
+      "name": "GenAI NMS API-RAJASTHAN",
+      "url": "https://developer.agristack.gov.in/genai/compare/comparenames/rj",
+      "method": "POST",
+      "payload": {
+        "name1": "Bhavar1",
+        "name2": "भमर"
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "apikey": "95bW5t13453paJaPQE"
+      },
+      "threshold": 500
+    }
+  ],
+  "RoR API Rajasthan": [
+    {
+      "name": "Seek Land Data API",
+      "url": "https://edhartiapi.rajasthan.gov.in/RestApi/api/FarmerRegistry/Land_Data/Seek",
+      "method": "POST",
+      "payload": {
+        "village_lgd_code": "82083",
+        "land_identifier": {
+          "survey_number": "1139"
+        }
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "Cookie": "NSC_feibsujbqj_jqw4=ffffffff094eed4645525d5f4f58455e445a4a423660"
+      },
+      "threshold": 500
+    }
+  ],
+  "RoR API TN": [
+    {
+      "name": "TN Get Token API",
+      "url": "https://tnfr.agristack.gov.in/ror-token",
+      "method": "POST",
+      "payload": {
+        "jwtusername": "agristack_tn@nic.in",
+        "jwtpassword": "TnAgri#@2024"
+      },
+      "headers": {
+        "client-id": "623380e2094ea594c711377cb5f6dc0d27b5cd21ae78c5cd7fd909bf40a7b56d",
+        "ClinetIdVerified": "yes",
+        "openResource": "yes",
+        "Content-Type": "application/json"
+      },
+      "threshold": 500,
+      "extract": {
+        "tn_token": {
+          "from": "$.token",
+          "regex": "\"token\"\\s*:\\s*\"([^\"]+)\""
+        }
+      }
+    },
+    {
+      "name": "TN Get Lands API",
+      "url": "https://tnfr.agristack.gov.in/ror-data",
+      "method": "POST",
+      "payload": {
+        "village_lgd_code": "951848",
+        "land_identifier": {
+          "survey_number": "12/3A"
+        }
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer {{tn_token}}",
+        "client-id": "623380e2094ea594c711377cb5f6dc0d27b5cd21ae78c5cd7fd909bf40a7b56d",
+        "ClinetIdVerified": "yes"
+      },
+      "threshold": 500
+    }
+  ],
+  "RoR API Bihar": [
+    {
+      "name": "Get AgriStack Plot API",
+      "url": "https://biharbhumi.bihar.gov.in/GetUserApi/api/GetAgriStackPlot",
+      "method": "POST",
+      "payload": {
+        "village_lgd_code": "237854",
+        "survey_number": "240",
+        "password": "LrcBih@Agri_BH",
+        "user": "Admin"
+      },
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "threshold": 500
+    }
+  ],
+  "RoR API UP": [
+    {
+      "name": "UP WS Authenticate API",
+      "url": "https://upbhulekh.gov.in/WS_AGRISTACK/auth/authenticate",
+      "method": "POST",
+      "payload": {
+        "username": "GUEST_DCS",
+        "password": "Guest@123$"
+      },
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "threshold": 500,
+      "extract": {
+        "ws_token": "$.jwt"
+      }
+    },
+    {
+      "name": "UP Get Sub Survey / Khasra API",
+      "url": "https://upbhulekh.gov.in/WS_AGRISTACK/landrecords/khasra?village=143790&khasra_no=681",
+      "method": "GET",
+      "headers": {
+        "Authorization": "Bearer {{ws_token}}"
+      },
+      "threshold": 500
+    },
+    {
+      "name": "UP LandRecords Authenticate API",
+      "url": "https://upbhulekh.gov.in/UpLandRecords/agristack/authenticate",
+      "method": "POST",
+      "payload": {
+        "username": "admin_123",
+        "password": "passw1ord"
+      },
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "threshold": 500,
+      "extract": {
+        "land_token": "$.jwt"
+      }
+    },
+    {
+      "name": "UP Get Land Records API",
+      "url": "https://upbhulekh.gov.in/UpLandRecords/agristack/landDetails?villageCode=143790&uniqueCode=1437900681000012",
+      "method": "GET",
+      "headers": {
+        "Authorization": "Bearer {{land_token}}"
+      },
+      "threshold": 500
+    }
+  ],
+  "RoR API MH": [
+    {
+      "name": "MH Get Sub Survey API",
+      "url": "https://api.mahabhumi.gov.in/api/eferfar/getSubSurveyList",
+      "method": "POST",
+      "payload": {
+        "lgd_code": 525554,
+        "pin": 15,
+        "clientCode": "AGRISTACK"
+      },
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "threshold": 500
+    },
+    {
+      "name": "MH Get Land Details API",
+      "url": "https://api.mahabhumi.gov.in/api/eferfar/unified_land_api",
+      "method": "POST",
+      "payload": {
+        "village_lgd_code": "525554",
+        "land_identifier": {
+          "survey_number": "15/1/अ/ब/क/1"
+        },
+        "clientCode": "AGRISTACK"
+      },
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "threshold": 500
+    }
+  ],
+  "RoR API GJ": [
+    {
+      "name": "GJ Authenticate API",
+      "url": "https://rahat.gujarat.gov.in/agristack/get-token",
+      "method": "POST",
+      "payload": {
+        "userName": "agristack",
+        "password": "eadghra!rs@tack$1807"
+      },
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "threshold": 500,
+      "extract": {
+        "gj_token": "$.jwt"
+      }
+    },
+    {
+      "name": "GJ Get Sub Survey API",
+      "url": "https://rahat.gujarat.gov.in/agristack/GetSubSurveyNumber",
+      "method": "POST",
+      "payload": {
+        "village_lgd_code": "511291",
+        "survey_number": "865"
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer {{gj_token}}"
+      },
+      "threshold": 500
+    },
+    {
+      "name": "GJ Unified Land Data API",
+      "url": "https://rahat.gujarat.gov.in/agristack/UnifiedLandData",
+      "method": "POST",
+      "payload": {
+        "village_lgd_code": "513371",
+        "land_identifier": {
+          "survey_number": "32/3"
+        }
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer {{gj_token}}"
+      },
+      "threshold": 500
+    }
+  ],
+  "RoR API OD": [
+    {
+      "name": "OD Land Details API",
+      "url": "https://bhulekh.ori.nic.in/AgriStackService.svc/json/GetData",
+      "method": "POST",
+      "payload": {
+        "query_name": "agristack_land_data_v0_get_data",
+        "mapper_id": "i10:o12",
+        "query_params": [
+          {
+            "village_lgd_code": "407544",
+            "land_identifier": {
+              "survey_number": "11"
+            }
+          }
+        ]
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "Cookie": "ASP.NET_SessionId=anegxkeoz1uhexk5sulc054a"
+      },
+      "threshold": 500
+    }
+  ],
+  "RoR API CG": [
+    {
+      "name": "CG RoR Land API",
+      "url": "https://cgfr.agristack.gov.in/getCGRorLand",
+      "method": "POST",
+      "payload": {
+        "village_lgd_Code": "432930",
+        "land_identifier": {
+          "survey_number": "100"
+        }
+      },
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "threshold": 500
+    }
+  ],
+  "RoR API AS": [
+    {
+      "name": "AS Geo RoR Land API",
+      "url": "https://landhub.assam.gov.in/api/index.php/v1/agristack/georor",
+      "method": "POST",
+      "payload": {
+        "transaction_id": "abcxyz-zylsjkdlfj-sdlfjlj-lpjshp",
+        "vill_lgd_code": "280839",
+        "dag_no": "151"
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "X-API-KEY": "AGRISTACK-PRO-LIVE",
+        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.egLffEuseocnd81sBPB0l1-ilaU1LdlTfOmOQpnXjHc"
+      },
+      "threshold": 800
+    }
+  ],
+  "RoR API AP": [
+    {
+      "name": "AP Get Token API",
+      "url": "http://103.129.75.175/Finalror/cropinsur/api/Token",
+      "method": "POST",
+      "payload": {
+        "UN": "AGRISTACK",
+        "UP": "Agri@2024#"
+      },
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "threshold": 800,
+      "extract": {
+        "ap_token": "$.Data"
+      }
+    },
+    {
+      "name": "AP Get Sub Survey API",
+      "url": "http://103.129.75.175/Finalror/cropinsur/Agri/AgristackData",
+      "method": "POST",
+      "payload": {
+        "ptype": "Klist",
+        "village_lgd_code": "580123",
+        "land_identifier": {
+          "survey_number": "43763"
+        }
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer {{ap_token}}"
+      },
+      "threshold": 800
+    },
+    {
+      "name": "AP Get Land Details API",
+      "url": "http://103.129.75.175/Finalror/cropinsur/Agri/AgristackData",
+      "method": "POST",
+      "payload": {
+        "ptype": "Adangal",
+        "village_lgd_code": "589732",
+        "khatano": "1",
+        "land_identifier": {
+          "survey_number": "241-1B"
+        }
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer {{ap_token}}"
+      },
+      "threshold": 800
+    }
+  ],
+  "Jansamarth API MH": [
+    {
+      "name": "Get Token API",
+      "url": "https://ufsi.agristack.gov.in/nm/token",
+      "method": "POST",
+      "payload": {
+        "client_id": "registry-frontend",
+        "username": "psbLoans",
+        "password": "psbLoans@2024",
+        "grant_type": "password"
+      },
+      "headers": {
+        "Content-Type": "application/json"
+      },
+      "threshold": 800,
+      "extract": {
+        "ap_token": "$.access_token"
+      }
+    },
+    {
+      "name": "Farmer ID Seek",
+      "url": "https://www.jansamarth.in/gateway/kcc/process/agri/stack/api/8708248/getFarmerId/on-seek",
+      "method": "POST",
+      "payload": {
+        "signature": "signature string",
+        "header": {
+          "version": "0.1.0",
+          "message_id": "{{message_id}}",
+          "message_ts": "{{message_ts}}",
+          "total_count": 1,
+          "sender_id": "287dc2f8-f794-4dc5-aef1-ddd1665bf66d",
+          "receiver_id": "ed5288ce-aada-4fd9-b929-0062a08207c4",
+          "is_msg_encrypted": false,
+          "sender_uri": "https://www.jansamarth.in/gateway/kcc/process/agri/stack/api/8708248/getFarmerId/on-seek"
+        },
+        "message": {
+          "transaction_id": "{{transaction_id}}",
+          "search_request": [
+            {
+              "reference_id": "{{reference_id}}",
+              "timestamp": "{{message_ts}}",
+              "search_criteria": {
+                "query_type": "namedQuery",
+                "reg_type": "agristack_farmer",
+                "query": {
+                  "query_name": "agristack_farmer_id_v1_get_data",
+                  "mapper_id": "i4:o4v1",
+                  "query_params": [
+                    {
+                      "state_lgd_code": "27",
+                      "encrypted_aadhaar": "NTc2MzM0NDczMDE1"
+                    }
+                  ]
+                },
+                "sort": [
+                  {
+                    "attribute_name": "string",
+                    "sort_order": "asc"
+                  }
+                ],
+                "pagination": {
+                  "page_size": 2000,
+                  "page_number": 1
+                },
+                "consent": {
+                  "consent_required": false,
+                  "consent_artifact": null
+                }
+              },
+              "locale": "en"
+            }
+          ]
+        }
+      },
+      "headers": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer {{ap_token}}"
+      },
+      "threshold": 800
+    }
+  ]
+}

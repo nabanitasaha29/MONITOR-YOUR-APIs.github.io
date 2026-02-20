@@ -1,0 +1,47 @@
+.navbar {
+    height: 160px;
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(2px);
+    /* border-bottom: 10px solid #76797d; */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar-left .logo {
+    font-size: 38px;
+    font-weight: 600;
+    color: #38bdf8;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.navbar-right {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-icon {
+    background: transparent;
+    border: 1px solid #1e293b;
+    color: #cbd5f5;
+    
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.nav-icon:hover {
+    background: #1e293b;
+    color: white;
+}
