@@ -1,45 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Sidebar.css";
 import { Menu, Home, Activity, Layers, Settings } from "lucide-react";
 
-const Sidebar = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  console.log("Sidebar component loaded");
-
+const Sidebar = ({ collapsed, onToggle }) => {
   return (
-    <div className={`sidebar ${collapsed ? "collapsed" : ""}`}>
+    <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
       <div className="sidebar-top">
-        <button className="hamburger" onClick={() => setCollapsed(!collapsed)}>
-          <Menu size={20} />
+        <button className="hamburger" onClick={onToggle} aria-label="Toggle sidebar">
+          <Menu className="hamburger-icon" size={28} />
         </button>
-
-        {!collapsed && <span className="sidebar-title"></span>}
+       
       </div>
 
-      <div className="sidebar-menu">
-        <div className="sidebar-item">
+      <nav className="sidebar-menu">
+        <button className="sidebar-item active" title={collapsed ? "Dashboard" : undefined}>
           <Home size={18} />
           {!collapsed && <span>Dashboard</span>}
-        </div>
+          {collapsed && <span className="sr-only">Dashboard</span>}
+        </button>
 
-        <div className="sidebar-item">
+        <button className="sidebar-item" title={collapsed ? "API Monitor" : undefined}>
           <Activity size={18} />
           {!collapsed && <span>API Monitor</span>}
-        </div>
+          {collapsed && <span className="sr-only">API Monitor</span>}
+        </button>
 
-        <div className="sidebar-item">
+        <button className="sidebar-item" title={collapsed ? "Groups" : undefined}>
           <Layers size={18} />
           {!collapsed && <span>Groups</span>}
-        </div>
-      </div>
+          {collapsed && <span className="sr-only">Groups</span>}
+        </button>
+      </nav>
 
       <div className="sidebar-bottom">
-        <div className="sidebar-item settings">
+        <button className="sidebar-item settings" title={collapsed ? "Settings" : undefined}>
           <Settings size={18} />
           {!collapsed && <span>Settings</span>}
-        </div>
+          {collapsed && <span className="sr-only">Settings</span>}
+        </button>
       </div>
-    </div>
+    </aside>
   );
 };
 
