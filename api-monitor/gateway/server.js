@@ -40,5 +40,6 @@ app.get("/run-monitor", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`🚀 Gateway running on ${PORT}`);
+  console.log(` Gateway running on ${PORT}`);
 });
+
