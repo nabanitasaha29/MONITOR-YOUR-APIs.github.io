@@ -32,7 +32,7 @@ import GroupsPage from "../pages/GroupsPage/GroupsPage.jsx";
 const SidebarRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/api-monitor" replace />} />
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
       <Route path="/dashboard" element={<DahsboardLandingPage />} />
       <Route path="/api-monitor" element={<ApiMonitor />} />
