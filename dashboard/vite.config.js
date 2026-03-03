@@ -17,7 +17,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // Ensures built assets use the correct sub-path
-  base: '/dashboard',
+  base: '/dashboard/',
   server: {
     // This is optional for production, but harmless to keep
     allowedHosts: ['developer.agristack.gov.in'],
