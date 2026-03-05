@@ -8,7 +8,7 @@ app.use(cors());
 const PORT = process.env.PORT || 4000;
 const MONITOR_BASE = process.env.MONITOR_BASE || "http://monitor:8000";
 
-/* Get Groups — delegated to monitor */
+/* Get Groups delegated to monitor */
 app.get("/groups", async (req, res) => {
   try {
     const r = await fetch(`${MONITOR_BASE}/groups`);

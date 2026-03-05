@@ -6,7 +6,7 @@ from service import run_monitor, apis  # apis is loaded from config.json in serv
 
 app = FastAPI(title="API Monitor")
 
-_last_results = None  # cache last run in memory
+_last_results = None  
 
 @app.get("/health")
 def health():
