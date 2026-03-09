@@ -158,6 +158,9 @@ for group, api_list in apis.items():
 
         results.append({
             "group": group,
+              "category": api.get("category"),
+            "state": api.get("state"),
+            "group-type": api.get("group-type"),
             "name": api.get("name"),
             "api": api["url"],
             "method": api.get("method", "GET"),
