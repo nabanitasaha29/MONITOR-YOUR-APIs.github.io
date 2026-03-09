@@ -1,57 +1,96 @@
 
+// import express from "express";
+// import cors from "cors";
+
+// const app = express();
+// app.use(cors());
+
+// const PORT = process.env.PORT || 4000;
+// const MONITOR_BASE = process.env.MONITOR_BASE || "http://monitor:8000";
+
+// /* Get Groups delegated to monitor */
+// app.get("/groups", async (req, res) => {
+//   try {
+//     const r = await fetch(`${MONITOR_BASE}/groups`);
+//     if (!r.ok) throw new Error(`Monitor responded ${r.status}`);
+//     const data = await r.json();
+//     res.json(data);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Failed to load groups" });
+//   }
+// });
+
+// /* Run Monitor — delegated to monitor (/run is POST in FastAPI) */
+// app.get("/run-monitor", async (req, res) => {
+//   try {
+//     const group = req.query.group;
+//     const url = group
+//       ? `${MONITOR_BASE}/run?group=${encodeURIComponent(group)}`
+//       : `${MONITOR_BASE}/run`;
+
+//     const r = await fetch(url, { method: "POST" });
+//     if (!r.ok) throw new Error(`Monitor responded ${r.status}`);
+//     const data = await r.json();
+//     res.json(data);
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).json({ error: "Monitor call failed" });
+//   }
+// });
+
+
+
+
+
+
+
+// app.listen(PORT, () => {
+//   console.log(` hello Server Gateway running on ${PORT}`);
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import express from "express";
 import cors from "cors";
-
-// If you are on Node < 18 and fetch is not available, install and import:
-// import fetch from "node-fetch";
 
 const app = express();
 app.use(cors());
 app.use(express.json()); // in case you later send JSON to /api/run
 
 const PORT = process.env.PORT || 4000;
-const MONITOR_BASE = process.env.MONITOR_BASE || "http://127.0.0.1:8000"; // use localhost default for dev
+const MONITOR_BASE = process.env.MONITOR_BASE || "http://monitor:8000";
 
-/* ---------------------------
-   NEW: /api endpoints for frontend
-----------------------------*/
-
-/** GET /api/groups  -> proxies to FastAPI GET /groups */
-app.get("/api/groups", async (req, res) => {
-  try {
-    const r = await fetch(`${MONITOR_BASE}/groups`);
-    if (!r.ok) throw new Error(`Monitor responded ${r.status}`);
-    const data = await r.json();
-    res.json(data);
-  } catch (err) {
-    console.error("[/api/groups] error:", err);
-    res.status(500).json({ error: "Failed to load groups" });
-  }
-});
-
-/** POST /api/run[?group=...]  -> proxies to FastAPI POST /run */
-app.post("/api/run", async (req, res) => {
-  try {
-    const group = req.query.group;
-    const url = group
-      ? `${MONITOR_BASE}/run?group=${encodeURIComponent(group)}`
-      : `${MONITOR_BASE}/run`;
-
-    const r = await fetch(url, { method: "POST" });
-    if (!r.ok) throw new Error(`Monitor responded ${r.status}`);
-    const data = await r.json();
-    res.json(data);
-  } catch (err) {
-    console.error("[/api/run] error:", err);
-    res.status(500).json({ error: "Monitor call failed" });
-  }
-});
-
-/* ---------------------------
-   Existing endpoints (optional keep)
-----------------------------*/
-
-/** Old: GET /groups (not used by frontend, but harmless to keep) */
+/* Get Groups delegated to monitor */
 app.get("/groups", async (req, res) => {
   try {
     const r = await fetch(`${MONITOR_BASE}/groups`);
@@ -64,7 +103,7 @@ app.get("/groups", async (req, res) => {
   }
 });
 
-/** Old: GET /run-monitor -> POST /run */
+/* Run Monitor — delegated to monitor (/run is POST in FastAPI) */
 app.get("/run-monitor", async (req, res) => {
   try {
     const group = req.query.group;
