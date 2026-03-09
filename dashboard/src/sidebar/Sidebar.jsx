@@ -1,22 +1,59 @@
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import { Menu, Home, Activity, Layers, Settings } from "lucide-react";
+import {
+  Menu,
+  Home,
+  Activity,
+  Layers,
+  Settings,
+  ChevronRight,
+} from "lucide-react";
 import "./Sidebar.css";
 
 const Sidebar = ({ collapsed, onToggle }) => {
   const [openGroups, setOpenGroups] = useState(false);
   const [openFarmerRegistry, setOpenFarmerRegistry] = useState(false);
 
+  // Guard to handle "expand because Groups was clicked" without instantly closing submenus.
+  const expandIntentRef = useRef(false);
+
   useEffect(() => {
     const cls = "sidebar-is-collapsed";
     document.body.classList.toggle(cls, !!collapsed);
+
+    // When user collapses, close submenus — unless we are in an "expand-intent" flow.
     if (collapsed) {
-      setOpenGroups(false);
-      setOpenFarmerRegistry(false);
+      if (!expandIntentRef.current) {
+        setOpenGroups(false);
+        setOpenFarmerRegistry(false);
+      }
     }
     return () => document.body.classList.remove(cls);
   }, [collapsed]);
+
+  /** When Groups icon is clicked:
+   *  - If collapsed: expand sidebar, then open Groups submenu
+   *  - If expanded: normal toggle behavior
+   */
+  const handleGroupsClick = () => {
+    if (collapsed) {
+      expandIntentRef.current = true;
+
+      // Expand the sidebar first
+      onToggle?.();
+
+      // After layout updates, open the submenu
+      requestAnimationFrame(() => {
+        setOpenGroups(true);
+        // Clear the guard shortly after
+        setTimeout(() => {
+          expandIntentRef.current = false;
+        }, 200);
+      });
+    } else {
+      setOpenGroups((v) => !v);
+    }
+  };
 
   return (
     <aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
@@ -30,10 +67,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
         >
           <Menu className="hamburger-icon" size={22} />
         </button>
-
-        
       </div>
-
+      {/* DASHBOARD FOR CENTRAL VIEW */}
       {/* SCROLL (only this area scrolls) */}
       <nav className="sidebar-menu" aria-label="Primary">
         <NavLink
@@ -50,7 +85,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
           {!collapsed && <span className="item-label">Dashboard</span>}
         </NavLink>
 
-        <NavLink
+        {/*API MONITOR ---WILL GET DELETED ONCE BIFERCATION IS DONE  */}
+        {/* <NavLink
           to="/api-monitor"
           className={({ isActive }) =>
             `sidebar-item ${isActive ? "active" : ""}`
@@ -62,7 +98,9 @@ const Sidebar = ({ collapsed, onToggle }) => {
             <Activity size={18} />
           </span>
           {!collapsed && <span className="item-label">API Monitor</span>}
-        </NavLink>
+        </NavLink> */}
+
+        {/* GROUPS WHICH WILL BE BIFERCATED BASED ON TYPE [FR,DCS,MAPS] THEREAFTERER  SUB DIVIDED INTO STATES */}
 
         {/* ===== GROUPS ===== */}
         <div className="sidebar-group">
@@ -70,7 +108,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
             type="button"
             className="sidebar-item group-toggle"
             title={collapsed ? "Groups" : undefined}
-            onClick={() => !collapsed && setOpenGroups((v) => !v)}
+            // onClick={() => !collapsed && setOpenGroups((v) => !v)}
+            onClick={handleGroupsClick} /* ← updated */
             aria-expanded={!collapsed && openGroups}
             aria-controls="submenu-groups"
           >
@@ -118,7 +157,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       `submenu-link ${isActive ? "active" : ""}`
                     }
                   >
-                    <span className="dot" aria-hidden="true" />Rajasthan
+                    <span className="arrow" aria-hidden="true" />
+                    Rajasthan
                   </NavLink>
                   <NavLink
                     to="/groups/farmer-registry/TN"
@@ -127,7 +167,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       `submenu-link ${isActive ? "active" : ""}`
                     }
                   >
-                    <span className="dot" aria-hidden="true" />Tamil Nadu
+                    <span className="arrow" aria-hidden="true" />
+                    Tamil Nadu
                   </NavLink>
                   <NavLink
                     to="/groups/farmer-registry/BR"
@@ -136,7 +177,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       `submenu-link ${isActive ? "active" : ""}`
                     }
                   >
-                    <span className="dot" aria-hidden="true" />Bihar
+                    <span className="arrow" aria-hidden="true" />
+                    Bihar
                   </NavLink>
                   <NavLink
                     to="/groups/farmer-registry/UP"
@@ -145,7 +187,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       `submenu-link ${isActive ? "active" : ""}`
                     }
                   >
-                    <span className="dot" aria-hidden="true" />Uttar Pradesh
+                    <span className="arrow" aria-hidden="true" />
+                    Uttar Pradesh
                   </NavLink>
                   <NavLink
                     to="/groups/farmer-registry/MH"
@@ -154,7 +197,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       `submenu-link ${isActive ? "active" : ""}`
                     }
                   >
-                    <span className="dot" aria-hidden="true" />Maharashtra
+                    <span className="arrow" aria-hidden="true" />
+                    Maharashtra
                   </NavLink>
                   <NavLink
                     to="/groups/farmer-registry/AS"
@@ -163,7 +207,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       `submenu-link ${isActive ? "active" : ""}`
                     }
                   >
-                    <span className="dot" aria-hidden="true" />Assam
+                    <span className="arrow" aria-hidden="true" />
+                    Assam
                   </NavLink>
                   <NavLink
                     to="/groups/farmer-registry/CG"
@@ -172,7 +217,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       `submenu-link ${isActive ? "active" : ""}`
                     }
                   >
-                    <span className="dot" aria-hidden="true" />Chhattisgarh
+                    <span className="arrow" aria-hidden="true" />
+                    Chhattisgarh
                   </NavLink>
                   <NavLink
                     to="/groups/farmer-registry/GJ"
@@ -181,7 +227,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       `submenu-link ${isActive ? "active" : ""}`
                     }
                   >
-                    <span className="dot" aria-hidden="true" />Gujarat
+                    <span className="arrow" aria-hidden="true" />
+                    Gujarat
                   </NavLink>
                   <NavLink
                     to="/groups/farmer-registry/OD"
@@ -190,7 +237,8 @@ const Sidebar = ({ collapsed, onToggle }) => {
                       `submenu-link ${isActive ? "active" : ""}`
                     }
                   >
-                    <span className="dot" aria-hidden="true" />Odisha
+                    <span className="arrow" aria-hidden="true" />
+                    Odisha
                   </NavLink>
                 </div>
               )}

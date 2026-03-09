@@ -1,0 +1,116 @@
+{
+    "RoR API MH": [
+        {
+            "name": "MH Get Sub Survey API",
+            "url": "https://api.mahabhumi.gov.in/api/eferfar/getSubSurveyList",
+            "method": "POST",
+            "payload": {
+                "lgd_code": 525554,
+                "pin": 15,
+                "clientCode": "AGRISTACK"
+            },
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "threshold": 500
+        },
+        {
+            "name": "MH Get Land Details API",
+            "url": "https://api.mahabhumi.gov.in/api/eferfar/unified_land_api",
+            "method": "POST",
+            "payload": {
+                "village_lgd_code": "525554",
+                "land_identifier": {
+                    "survey_number": "15/1/अ/ब/क/1"
+                },
+                "clientCode": "AGRISTACK"
+            },
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "threshold": 500
+        }
+    ],
+    "Jansamarth API MH": [
+        {
+            "name": "Get Token API",
+            "url": "https://ufsi.agristack.gov.in/nm/token",
+            "method": "POST",
+            "payload": {
+                "client_id": "registry-frontend",
+                "username": "psbLoans",
+                "password": "psbLoans@2024",
+                "grant_type": "password"
+            },
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "threshold": 800,
+            "extract": {
+                "ap_token": "$.access_token"
+            }
+        },
+        {
+            "name": "Farmer ID Seek MH",
+            "url": "https://mhfr.agristack.gov.in/farmer-registry-api-mh/agristack/v1/api/assetIdentification/seek",
+            "method": "POST",
+            "payload": {
+                "signature": "signature string",
+                "header": {
+                    "version": "0.1.0",
+                    "message_id": "{{message_id}}",
+                    "message_ts": "{{message_ts}}",
+                    "total_count": 1,
+                    "sender_id": "287dc2f8-f794-4dc5-aef1-ddd1665bf66d",
+                    "receiver_id": "ed5288ce-aada-4fd9-b929-0062a08207c4",
+                    "is_msg_encrypted": false,
+                    "sender_uri": "https://www.jansamarth.in/gateway/kcc/process/agri/stack/api/8708248/getFarmerId/on-seek"
+                },
+                "message": {
+                    "transaction_id": "{{transaction_id}}",
+                    "search_request": [
+                        {
+                            "reference_id": "{{reference_id}}",
+                            "timestamp": "{{message_ts}}",
+                            "search_criteria": {
+                                "query_type": "namedQuery",
+                                "reg_type": "agristack_farmer",
+                                "query": {
+                                    "query_name": "agristack_farmer_id_v1_get_data",
+                                    "mapper_id": "i4:o4v1",
+                                    "query_params": [
+                                        {
+                                            "state_lgd_code": "27",
+                                            "encrypted_aadhaar": "NTc2MzM0NDczMDE1"
+                                        }
+                                    ]
+                                },
+                                "sort": [
+                                    {
+                                        "attribute_name": "string",
+                                        "sort_order": "asc"
+                                    }
+                                ],
+                                "pagination": {
+                                    "page_size": 2000,
+                                    "page_number": 1
+                                },
+                                "consent": {
+                                    "consent_required": false,
+                                    "consent_artifact": null
+                                }
+                            },
+                            "locale": "en"
+                        }
+                    ]
+                }
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer {{ap_token}}",
+                "Referer": "https://www.jansamarth.in"
+            },
+            "threshold": 800
+        }
+    ]
+}

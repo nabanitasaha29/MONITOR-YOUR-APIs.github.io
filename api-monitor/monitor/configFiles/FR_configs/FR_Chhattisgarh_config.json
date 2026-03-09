@@ -1,0 +1,19 @@
+{
+    "RoR API CG": [
+        {
+            "name": "CG RoR Land API",
+            "url": "https://cgfr.agristack.gov.in/getCGRorLand",
+            "method": "POST",
+            "payload": {
+                "village_lgd_Code": "432930",
+                "land_identifier": {
+                    "survey_number": "100"
+                }
+            },
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "threshold": 500
+        }
+    ]
+}

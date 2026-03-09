@@ -1,0 +1,55 @@
+{
+    "RoR API AP": [
+        {
+            "name": "AP Get Token API",
+            "url": "http://103.129.75.175/Finalror/cropinsur/api/Token",
+            "method": "POST",
+            "payload": {
+                "UN": "AGRISTACK",
+                "UP": "Agri@2024#"
+            },
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "threshold": 800,
+            "extract": {
+                "ap_token": "$.Data"
+            }
+        },
+        {
+            "name": "AP Get Sub Survey API",
+            "url": "http://103.129.75.175/Finalror/cropinsur/Agri/AgristackData",
+            "method": "POST",
+            "payload": {
+                "ptype": "Klist",
+                "village_lgd_code": "580123",
+                "land_identifier": {
+                    "survey_number": "43763"
+                }
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer {{ap_token}}"
+            },
+            "threshold": 800
+        },
+        {
+            "name": "AP Get Land Details API",
+            "url": "http://103.129.75.175/Finalror/cropinsur/Agri/AgristackData",
+            "method": "POST",
+            "payload": {
+                "ptype": "Adangal",
+                "village_lgd_code": "589732",
+                "khatano": "1",
+                "land_identifier": {
+                    "survey_number": "241-1B"
+                }
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer {{ap_token}}"
+            },
+            "threshold": 800
+        }
+    ]
+}

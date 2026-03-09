@@ -1,0 +1,19 @@
+{
+    "RoR API Bihar": [
+        {
+            "name": "Get AgriStack Plot API",
+            "url": "https://biharbhumi.bihar.gov.in/GetUserApi/api/GetAgriStackPlot",
+            "method": "POST",
+            "payload": {
+                "village_lgd_code": "237854",
+                "survey_number": "240",
+                "password": "LrcBih@Agri_BH",
+                "user": "Admin"
+            },
+            "headers": {
+                "Content-Type": "application/json"
+            },
+            "threshold": 500
+        }
+    ]
+}

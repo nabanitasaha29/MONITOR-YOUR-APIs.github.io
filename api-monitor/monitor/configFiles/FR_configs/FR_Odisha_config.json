@@ -1,0 +1,26 @@
+{
+    "RoR API OD": [
+        {
+            "name": "OD Land Details API",
+            "url": "https://bhulekh.ori.nic.in/AgriStackService.svc/json/GetData",
+            "method": "POST",
+            "payload": {
+                "query_name": "agristack_land_data_v0_get_data",
+                "mapper_id": "i10:o12",
+                "query_params": [
+                    {
+                        "village_lgd_code": "407544",
+                        "land_identifier": {
+                            "survey_number": "11"
+                        }
+                    }
+                ]
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Cookie": "ASP.NET_SessionId=anegxkeoz1uhexk5sulc054a"
+            },
+            "threshold": 500
+        }
+    ]
+}
