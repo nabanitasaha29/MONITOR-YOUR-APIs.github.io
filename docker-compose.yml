@@ -73,6 +73,8 @@ services:
       context: ./api-monitor/monitor
     container_name: monitor
     networks: [appnet]
+    ports:
+      - "8000:8000"
     healthcheck:
       test:
         [
