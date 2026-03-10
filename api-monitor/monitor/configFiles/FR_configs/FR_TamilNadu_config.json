@@ -1,0 +1,44 @@
+{
+    "RoR API TN": [
+        {
+            "name": "TN Get Token API",
+            "url": "https://tnfr.agristack.gov.in/ror-token",
+            "method": "POST",
+            "payload": {
+                "jwtusername": "agristack_tn@nic.in",
+                "jwtpassword": "TnAgri#@2024"
+            },
+            "headers": {
+                "client-id": "623380e2094ea594c711377cb5f6dc0d27b5cd21ae78c5cd7fd909bf40a7b56d",
+                "ClinetIdVerified": "yes",
+                "openResource": "yes",
+                "Content-Type": "application/json"
+            },
+            "threshold": 500,
+            "extract": {
+                "tn_token": {
+                    "from": "$.token",
+                    "regex": "\"token\"\\s*:\\s*\"([^\"]+)\""
+                }
+            }
+        },
+        {
+            "name": "TN Get Lands API",
+            "url": "https://tnfr.agristack.gov.in/ror-data",
+            "method": "POST",
+            "payload": {
+                "village_lgd_code": "951848",
+                "land_identifier": {
+                    "survey_number": "12/3A"
+                }
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer {{tn_token}}",
+                "client-id": "623380e2094ea594c711377cb5f6dc0d27b5cd21ae78c5cd7fd909bf40a7b56d",
+                "ClinetIdVerified": "yes"
+            },
+            "threshold": 500
+        }
+    ]
+}

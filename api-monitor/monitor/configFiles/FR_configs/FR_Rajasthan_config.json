@@ -1,0 +1,39 @@
+{
+    "GenAI NMS API": [
+        {
+            "name": "GenAI NMS API-RAJASTHAN",
+            "category": "FR",
+            "state": "RJ",
+            "group-type": "Name Match",
+            "url": "https://developer.agristack.gov.in/genai/compare/comparenames/rj",
+            "method": "POST",
+            "payload": {
+                "name1": "Bhavar1",
+                "name2": "भमर"
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "apikey": "95bW5t13453paJaPQE"
+            },
+            "threshold": 500
+        }
+    ],
+    "RoR API Rajasthan": [
+        {
+            "name": "Seek Land Data API",
+            "url": "https://edhartiapi.rajasthan.gov.in/RestApi/api/FarmerRegistry/Land_Data/Seek",
+            "method": "POST",
+            "payload": {
+                "village_lgd_code": "82083",
+                "land_identifier": {
+                    "survey_number": "1139"
+                }
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Cookie": "NSC_feibsujbqj_jqw4=ffffffff094eed4645525d5f4f58455e445a4a423660"
+            },
+            "threshold": 500
+        }
+    ]
+}

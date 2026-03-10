@@ -1,12 +1,4 @@
-// import { defineConfig } from 'vite'
-// import react from '@vitejs/plugin-react'
 
-
-// export default defineConfig({
-//   plugins: [react()],
-//   base: '/api-monitor/'
-
-// })
 
 
 
@@ -17,7 +9,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // Ensures built assets use the correct sub-path
-  base: '/dashboard/',
+  base: '/dashboard',
   server: {
     // This is optional for production, but harmless to keep
     allowedHosts: ['developer.agristack.gov.in'],
@@ -28,3 +20,30 @@ export default defineConfig({
     sourcemap: false,
   },
 })
+
+
+
+
+// import { defineConfig } from 'vite'
+// import react from '@vitejs/plugin-react'
+
+// export default defineConfig({
+//   plugins: [react()],
+//   // Ensures built assets use the correct sub-path
+//   base: '/dashboard/',
+//   server: {
+//     port: 5173,
+//     proxy: {
+//       '/api': {
+//         target: 'http://127.0.0.1:8000',
+//         changeOrigin: true,
+//         secure: false,
+//       },
+//     },
+//   },
+//   build: {
+//     // Optional but recommended for cleaner builds
+//     outDir: 'dist',
+//     sourcemap: false,
+//   },
+// })

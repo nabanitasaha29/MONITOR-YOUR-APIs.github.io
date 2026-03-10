@@ -1,58 +1,70 @@
-
-
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import "./ApiMonitor.css";
 
-const API_BASE = "/api"; // go through reverse-proxy
+const API_BASE = import.meta.env.VITE_API_BASE || "/api";
+
+// Map front-end route types to backend folder types
+const TYPE_MAP = {
+  "farmer-registry": "fr",
+  "mapper-apis": "mappers",
+  "dcs-apis": "dcs",
+  "dpe-apis": "dpe",
+};
 
 function ApiMonitor() {
+  const { type, code } = useParams(); // /groups/:type/:code
+
   const [groups, setGroups] = useState([]);
   const [results, setResults] = useState([]);
   const [loadingGroup, setLoadingGroup] = useState(null);
+  const [error, setError] = useState(null);
 
-  // Load groups on first render
+  const normalizedType = TYPE_MAP[type];
+  const uiGroupKey = `${normalizedType?.toUpperCase()}_${code}`;
+
+  // Create UI group when route changes
   useEffect(() => {
-    fetch(`${API_BASE}/groups`)
-      .then((res) => {
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        return res.json();
-      })
-      .then((data) => setGroups(data))
-      .catch((e) => {
-        console.error("Failed to load groups:", e);
-        alert("Failed to load groups");
-      });
-  }, []);
+    if (!normalizedType || !code) return;
+    setGroups([uiGroupKey]);
+    setResults([]); // clear previous results
+    setError(null);
+  }, [type, code, normalizedType]);
 
+  // Run group → call backend dynamic config
   const runGroup = async (groupName) => {
     setLoadingGroup(groupName);
+    setError(null);
 
     try {
-      const res = await fetch(
-        `${API_BASE}/run-monitor?group=${encodeURIComponent(groupName)}`,
-      );
+      const url = `${API_BASE}/run/by-type?type=${normalizedType}&code=${code}`;
+      const res = await fetch(url, { method: "POST" });
+
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
       const data = await res.json();
 
-      setResults((prev) => [
-        ...prev.filter((r) => r.group !== groupName),
-        ...data,
-      ]);
+      // Force ALL results into the same UI group
+      const normalizedResults = (data.results || []).map((r) => ({
+        ...r,
+        group: uiGroupKey,
+      }));
+
+      setResults(normalizedResults);
     } catch (err) {
       console.error("Failed to run group:", err);
-      alert("Failed to run group");
+      setError(err.message);
     } finally {
       setLoadingGroup(null);
     }
   };
 
-  const groupedResults = results.reduce((acc, result) => {
-    if (!acc[result.group]) acc[result.group] = [];
-    acc[result.group].push(result);
-    return acc;
-  }, {});
+  // Group results by UI group key ONLY
+  const groupedResults = {
+    [uiGroupKey]: results,
+  };
 
-  //  HEALTH LOGIC
+  // HEALTH LOGIC — unchanged
   const getGroupHealth = (groupApis) => {
     if (!groupApis || groupApis.length === 0) {
       return {
@@ -67,11 +79,9 @@ function ApiMonitor() {
     const networkErrors = groupApis.filter(
       (api) => api.status === "ERROR",
     ).length;
-
     const serverErrors = groupApis.filter(
       (api) => typeof api.status === "number" && api.status >= 500,
     ).length;
-
     const clientErrors = groupApis.filter(
       (api) =>
         typeof api.status === "number" && api.status >= 400 && api.status < 500,
@@ -84,11 +94,9 @@ function ApiMonitor() {
 
     let score = 100;
 
-    // 🚨 HARD penalties for real failures
     if (networkErrors > 0) score -= 40;
     if (serverErrors > 0) score -= 30;
 
-    // ⚠ Soft penalties
     score -= clientErrors * 5;
     score -= slowApis * 3;
 
@@ -133,6 +141,16 @@ function ApiMonitor() {
   return (
     <div className="monitor-wrapper">
       <div className="container">
+        <h1 className="page-title">
+          Monitoring → {type} → {code}
+        </h1>
+
+        {error && (
+          <div style={{ color: "red", marginBottom: "14px" }}>
+            Error: {error}
+          </div>
+        )}
+
         <div className="grid">
           {groups.map((groupName) => {
             const groupApis = groupedResults[groupName] || [];
@@ -205,7 +223,6 @@ function ApiMonitor() {
                         </div>
                       </div>
 
-                      {/* Payload */}
                       {r.payload && (
                         <details className="payload-details">
                           <summary>View Payload</summary>
@@ -217,7 +234,6 @@ function ApiMonitor() {
                         </details>
                       )}
 
-                      {/* Error */}
                       {(r.status === "ERROR" || r.status >= 400) && (
                         <details className="error-details">
                           <summary>View Error</summary>
@@ -230,7 +246,6 @@ function ApiMonitor() {
                         </details>
                       )}
 
-                      {/* Response */}
                       {r.body && r.status >= 200 && r.status < 400 && (
                         <details className="response-details">
                           <summary>View Response</summary>

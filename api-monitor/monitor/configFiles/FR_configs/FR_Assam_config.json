@@ -1,0 +1,20 @@
+{
+    "RoR API AS": [
+        {
+            "name": "AS Geo RoR Land API",
+            "url": "https://landhub.assam.gov.in/api/index.php/v1/agristack/georor",
+            "method": "POST",
+            "payload": {
+                "transaction_id": "abcxyz-zylsjkdlfj-sdlfjlj-lpjshp",
+                "vill_lgd_code": "280839",
+                "dag_no": "151"
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "X-API-KEY": "AGRISTACK-PRO-LIVE",
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.egLffEuseocnd81sBPB0l1-ilaU1LdlTfOmOQpnXjHc"
+            },
+            "threshold": 800
+        }
+    ]
+}

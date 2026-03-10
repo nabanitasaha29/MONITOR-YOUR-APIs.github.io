@@ -1,0 +1,67 @@
+{
+    "Mapper API UP i1001:o1001 ": [
+        {
+            "name": "UP Farmer Data by Farmer ID (i1001:o1001)",
+            "url": "https://upde.agristack.gov.in/agristack-data-provisioning/v1/api/assetIdentification/seek",
+            "method": "POST",
+            "payload": {
+                "requestToken": "",
+                "signature": "signature string",
+                "header": {
+                    "version": "0.1.0",
+                    "message_id": "{{message_id}}",
+                    "message_ts": "{{message_ts}}",
+                    "sender_id": "dd6d26eb-8eee-4a8c-bc6a-fd7771576061",
+                    "sender_uri": "https://betafr.agristack.gov.in/farmer-registry-api-up-qa/agristack/v1/api/central/seekerOnSeek",
+                    "receiver_id": "ed5288ce-aada-4fd9-b929-0062a08207c4",
+                    "total_count": 1,
+                    "is_msg_encrypted": false
+                },
+                "message": {
+                    "transaction_id": "{{transaction_id}}",
+                    "search_request": [
+                        {
+                            "reference_id": "{{reference_id}}",
+                            "timestamp": "{{message_ts}}",
+                            "search_criteria": {
+                                "query_type": "namedQuery",
+                                "reg_type": "agristack_farmer",
+                                "query": {
+                                    "query_name": "fn_agristack_v0_fn_get_farmer_data_by_farmer_id",
+                                    "mapper_id": "i1001:o1001",
+                                    "query_params": [
+                                        {
+                                            "farmer_id": "{{farmer_id}}",
+                                            "aadhaar_type": "E",
+                                            "state_lgd_code": "9"
+                                        }
+                                    ]
+                                },
+                                "sort": [
+                                    {
+                                        "attribute_name": "string",
+                                        "sort_order": "asc"
+                                    }
+                                ],
+                                "pagination": {
+                                    "page_size": 2000,
+                                    "page_number": 1
+                                },
+                                "consent": {
+                                    "consent_required": false,
+                                    "consent_artifact": {}
+                                }
+                            },
+                            "locale": "en"
+                        }
+                    ]
+                }
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer {{up_ap_token}}"
+            },
+            "threshold": 800
+        }
+    ]
+}

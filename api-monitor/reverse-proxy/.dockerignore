@@ -1,0 +1,21 @@
+# Git
+.git
+.gitignore
+
+# Environment
+.env
+.env.*
+*.local
+
+# Editor / OS
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# Logs
+logs
+*.log
+*.log.*

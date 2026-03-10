@@ -1,3 +1,63 @@
+# version: "3.9"
+
+# services:
+#   dashboard:
+#     build:
+#       context: ./dashboard
+#     container_name: dashboard
+#     networks: [appnet]
+#     # No ports exposed; served via reverse-proxy
+
+#   gateway:
+#     build:
+#       context: ./api-monitor/gateway
+#     container_name: gateway
+#     networks: [appnet]
+#     env_file:
+#       - .env
+#     environment:
+#       # Fallbacks if not present in .env
+#       PORT: ${GATEWAY_PORT:-4000}
+#       MONITOR_BASE: ${MONITOR_BASE:-http://monitor:8000}
+#       NODE_ENV: ${NODE_ENV:-production}
+#     depends_on:
+#       monitor:
+#         condition: service_healthy
+
+#   monitor:
+#     build:
+#       context: ./api-monitor/monitor
+#     container_name: monitor
+#     networks: [appnet]
+#     healthcheck:
+#       # Use Python stdlib so we don't need curl/wget in the image
+#       test:
+#         [
+#           "CMD",
+#           "python",
+#           "-c",
+#           "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')",
+#         ]
+#       interval: 30s
+#       timeout: 5s
+#       retries: 3
+
+#   reverse-proxy:
+#     build:
+#       context: ./api-monitor/reverse-proxy
+#     container_name: reverse-proxy
+#     depends_on:
+#       - dashboard
+#       - gateway
+#       - monitor
+#     ports:
+#       - "80:80"
+#     networks: [appnet]
+
+# networks:
+#   appnet:
+#     driver: bridge
+
 version: "3.9"
 
 services:
@@ -8,29 +68,12 @@ services:
     networks: [appnet]
     # No ports exposed; served via reverse-proxy
 
-  gateway:
-    build:
-      context: ./api-monitor/gateway
-    container_name: gateway
-    networks: [appnet]
-    env_file:
-      - .env
-    environment:
-      # Fallbacks if not present in .env
-      PORT: ${GATEWAY_PORT:-4000}
-      MONITOR_BASE: ${MONITOR_BASE:-http://monitor:8000}
-      NODE_ENV: ${NODE_ENV:-production}
-    depends_on:
-      monitor:
-        condition: service_healthy
-
   monitor:
     build:
       context: ./api-monitor/monitor
     container_name: monitor
     networks: [appnet]
     healthcheck:
-      # Use Python stdlib so we don't need curl/wget in the image
       test:
         [
           "CMD",
@@ -47,9 +90,10 @@ services:
       context: ./api-monitor/reverse-proxy
     container_name: reverse-proxy
     depends_on:
-      - dashboard
-      - gateway
-      - monitor
+      dashboard:
+        condition: service_started
+      monitor:
+        condition: service_healthy
     ports:
       - "80:80"
     networks: [appnet]
